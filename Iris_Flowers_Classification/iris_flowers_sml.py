@@ -46,3 +46,42 @@ plt.show()
 #Scatter Plot Matrix
 scatter_matrix(DATASET)
 plt.show()
+
+#Split-out validation dataset
+ARRAY = DATASET.values
+X = ARRAY[:, 0:4]
+Y = ARRAY[:, 4]
+VALIDATION_SIZE = 0.20
+SEED = 7
+X_TRAIN, X_VALIDATION, Y_TRAIN, Y_VALIDATION = model_selection.train_test_split(X, Y, test_size=VALIDATION_SIZE, random_state=SEED)
+
+#Test options and evaulation metric
+SCORING = 'accuracy'
+
+# Spot Check Algorithms
+MODELS = []
+MODELS.append(('LR', LogisticRegression(solver='liblinear', multi_class='ovr')))
+MODELS.append(('LDA', LinearDiscriminantAnalysis()))
+MODELS.append(('KNN', KNeighborsClassifier()))
+MODELS.append(('CART', DecisionTreeClassifier()))
+MODELS.append(('NB', GaussianNB()))
+MODELS.append(('SVM', SVC(gamma='auto')))
+
+# evaluate each model in turn
+RESULTS = []
+NAMES = []
+for name, model in MODELS:
+	kfold = model_selection.KFold(n_splits=10, random_state=SEED)
+	cv_results = model_selection.cross_val_score(model, X_TRAIN, Y_TRAIN, cv=kfold, scoring=SCORING)
+	RESULTS.append(cv_results)
+	NAMES.append(name)
+	msg = "%s: %f (%f)" % (name, cv_results.mean(), cv_results.std())
+	print(msg)
+
+# Compare Algorithms
+FIG = plt.figure()
+FIG.suptitle('Algorithm Comparison')
+AX = FIG.add_subplot(111)
+plt.boxplot(RESULTS)
+AX.set_xticklabels(NAMES)
+plt.show()
