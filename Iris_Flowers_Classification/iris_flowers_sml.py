@@ -34,3 +34,15 @@ print(DATASET.describe())
 
 #Class Descriptions.  Number of rows that belong to each class.
 print(DATASET.groupby('class').size())
+
+#Box and whisker plots
+DATASET.plot(kind='box', subplots=True, layout=(2,2), sharex=False, sharey=False)
+plt.show()
+
+#Histograms
+DATASET.hist()
+plt.show()
+
+#Scatter Plot Matrix
+scatter_matrix(DATASET)
+plt.show()
