@@ -15,8 +15,8 @@ from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.naive_bayes import GaussianNB
 from sklearn.svm import SVC
 import pandas
-import matplotlib.pyplot as plt
 from pandas.plotting import scatter_matrix
+import matplotlib.pyplot as plt
 
 #Load Dataset and set column names
 NAMES = ['sepal-length', 'sepal-width', 'petal-length', 'petal-width', 'class']
@@ -36,7 +36,7 @@ print(DATASET.describe())
 print(DATASET.groupby('class').size())
 
 #Box and whisker plots
-DATASET.plot(kind='box', subplots=True, layout=(2,2), sharex=False, sharey=False)
+DATASET.plot(kind='box', subplots=True, layout=(2, 2), sharex=False, sharey=False)
 plt.show()
 
 #Histograms
