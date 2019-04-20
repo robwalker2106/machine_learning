@@ -85,3 +85,11 @@ AX = FIG.add_subplot(111)
 plt.boxplot(RESULTS)
 AX.set_xticklabels(NAMES)
 plt.show()
+
+#Make predictions on validation dataset
+KNN = KNeighborsClassifier()
+KNN.fit(X_TRAIN, Y_TRAIN)
+PREDICTIONS = KNN.predict(X_VALIDATION)
+print(accuracy_score(Y_VALIDATION, PREDICTIONS))
+print(confusion_matrix(Y_VALIDATION, PREDICTIONS))
+print(classification_report(Y_VALIDATION, PREDICTIONS))
